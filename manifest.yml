@@ -1,7 +1,7 @@
 ---
 applications:
 - name: falcon-mqtt
-  memory: 444m
+  memory: 111m
   instances: 1
   buildpack: java_buildpack
   path: target/mqttsubscriber-0.0.1-SNAPSHOT.jar
