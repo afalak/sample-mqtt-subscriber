@@ -24,7 +24,7 @@ public class AppConfig  implements WebSocketConfigurer {
 
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-		registry.addHandler(handler(), "/accelerometer").withSockJS();
+		registry.addHandler(handler(), "/accelerometer").setAllowedOrigins("*").withSockJS();
 	}
 
 	@Bean
