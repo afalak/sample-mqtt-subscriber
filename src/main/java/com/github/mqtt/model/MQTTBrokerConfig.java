@@ -27,7 +27,7 @@ public class MQTTBrokerConfig {
 	}
 
 	public String getConnectionString() {
-		return "tcp://" + this.hostName + ":" + this.port;
+		return "ws://" + this.hostName + ":" + this.port;
 	}
 
 	public String toString() {
