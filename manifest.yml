@@ -1,7 +1,9 @@
 ---
 applications:
 - name: falcon-mqtt
-  memory: 111m
+  memory: 750m
   instances: 1
-  buildpack: java_buildpack
+  buildpack: https://github.com/afalak/java-buildpack.git
   path: target/mqttsubscriber-0.0.1-SNAPSHOT.jar
+  env:
+    JAVA_OPTS: -XX:+DisableExplicitGC -XX:+UseG1GC -XX:+UseThreadPriorities -XX:ParallelGCThreads=16 -XX:ConcGCThreads=16 -XX:CompileThreshold=50000 -XX:+OptimizeStringConcat
