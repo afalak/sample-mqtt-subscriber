@@ -8,4 +8,4 @@ applications:
   disk_quota: 200M
   stack: cflinuxfs2
   env:
-    JAVA_OPTS: -XX:+DisableExplicitGC -XX:+ScavengeBeforeFullGC -XX:+UseThreadPriorities -XX:+UseG1GC -XX:ParallelGCThreads=16 -XX:ConcGCThreads=16 -XX:CompileThreshold=1000 -XX:+UseCompressedOops -XX:+UseBiasedLocking
+    JAVA_OPTS: -XX:+DisableExplicitGC -XX:+ScavengeBeforeFullGC -XX:+UseThreadPriorities -XX:+UseG1GC -XX:ParallelGCThreads=16 -XX:ConcGCThreads=16 -XX:CompileThreshold=1000 -XX:+UseCompressedOops -XX:+UseBiasedLocking -DLog4jContextSelector=org.apache.logging.log4j.core.async.AsyncLoggerContextSelector
