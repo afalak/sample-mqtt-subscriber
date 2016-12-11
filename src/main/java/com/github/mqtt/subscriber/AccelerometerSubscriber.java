@@ -40,7 +40,6 @@ public class AccelerometerSubscriber implements MqttCallback {
 		MqttConnectOptions connOpts = new MqttConnectOptions();
 		connOpts.setCleanSession(true);
 		connOpts.setMqttVersion(MqttConnectOptions.MQTT_VERSION_3_1_1);
-		connOpts.setMaxInflight(100);
 		connOpts.setKeepAliveInterval(60);
 		connOpts.setConnectionTimeout(60);
 		LOGGER.info("Connecting to broker: {}", this.connectionString);
