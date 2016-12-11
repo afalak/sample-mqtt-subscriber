@@ -1,0 +1,5 @@
+https://12factor.net/
+https://www.cloudfoundry.org/use/cloud-foundry-certified/
+https://www.predix.io/catalog/services/
+https://elements.heroku.com/
+https://console.ng.bluemix.net/catalog/
