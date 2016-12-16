@@ -9,6 +9,13 @@ import io.undertow.UndertowOptions;
 
 @SpringBootApplication
 public class Application {
+	@Bean
+	UndertowEmbeddedServletContainerFactory embeddedServletContainerFactory() {
+		UndertowEmbeddedServletContainerFactory factory = new UndertowEmbeddedServletContainerFactory();
+		factory.addBuilderCustomizers(builder -> builder.setServerOption(UndertowOptions.ENABLE_HTTP2, true));
+		return factory;
+	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}

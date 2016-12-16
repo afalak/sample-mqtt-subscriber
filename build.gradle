@@ -1,0 +1,57 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'application'
+apply plugin: 'org.springframework.boot'
+
+group = 'com.github'
+version = '0.0.1-SNAPSHOT'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
+
+jar{
+    baseName = 'mqttsubscriber'
+    version = '0.0.1-SNAPSHOT'
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url 'http://repo.spring.io/milestone' }
+        maven { url 'http://repo.spring.io/snapshot' }
+    }
+    dependencies {
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.4.2.RELEASE'
+    }
+}
+
+bootRun{
+    addResources = true
+}
+
+repositories {
+     mavenCentral()
+     jcenter()
+     maven { url "https://artifactory.predix.io/artifactory/PREDIX-EXT" }
+     maven { url "http://repo1.maven.org/maven2" }
+     maven { url "http://repo.spring.io/milestone" }
+}
+dependencies {
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter', version:'1.4.2.RELEASE'){}
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:'1.4.2.RELEASE'){} 
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-websocket', version:'1.4.2.RELEASE'){} 
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-undertow', version:'1.4.2.RELEASE'){
+    	exclude group: 'io.undertow', module: 'undertow-websockets-jsr'
+    }
+    compile group: 'org.eclipse.paho', name: 'org.eclipse.paho.client.mqttv3', version:'1.1.0'
+    compile group: 'org.thymeleaf', name: 'thymeleaf', version:'3.0.2.RELEASE'
+    compile group: 'org.thymeleaf', name: 'thymeleaf-spring4', version:'3.0.2.RELEASE'
+    testCompile group: 'junit', name: 'junit', version:'4.12'
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    compile("org.springframework.boot:spring-boot-devtools")
+    compile group: 'net.logstash.logback', name: 'logstash-logback-encoder', version: '4.8'
+}
+
