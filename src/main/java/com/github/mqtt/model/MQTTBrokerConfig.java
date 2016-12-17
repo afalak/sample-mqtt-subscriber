@@ -4,34 +4,34 @@ import javax.validation.constraints.NotNull;
 
 public class MQTTBrokerConfig {
 
-	@NotNull
-	private String hostName;
+    @NotNull
+    private String hostName;
 
-	@NotNull
-	private Integer port;
+    @NotNull
+    private Integer port;
 
-	public String getHostName() {
-		return hostName;
-	}
+    public String getHostName() {
+        return hostName;
+    }
 
-	public void setHostName(String hostName) {
-		this.hostName = hostName;
-	}
+    public void setHostName(String hostName) {
+        this.hostName = hostName;
+    }
 
-	public Integer getPort() {
-		return port;
-	}
+    public Integer getPort() {
+        return port;
+    }
 
-	public void setPort(Integer port) {
-		this.port = port;
-	}
+    public void setPort(Integer port) {
+        this.port = port;
+    }
 
-	public String getConnectionString() {
-		return "ws://" + this.hostName + ":" + this.port;
-	}
+    public String getConnectionString() {
+        return "ws://" + this.hostName + ":" + this.port;
+    }
 
-	public String toString() {
-		return this.hostName + ":" + this.port;
-	}
+    public String toString() {
+        return this.hostName + ":" + this.port;
+    }
 
 }

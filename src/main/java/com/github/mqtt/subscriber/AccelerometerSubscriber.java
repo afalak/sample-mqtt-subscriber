@@ -17,96 +17,96 @@ import org.slf4j.LoggerFactory;
 import com.github.mqtt.model.MQTTBrokerConfig;
 
 public class AccelerometerSubscriber implements MqttCallback {
-	
-	private String connectionString;
 
-	private String topic;
+    private String connectionString;
 
-	private Queue<String> queue = new LinkedList<>();
+    private String topic;
 
-	private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(AccelerometerSubscriber.class);
+    private Queue<String> queue = new LinkedList<>();
 
-	private MqttClient mqttClient;
-	
-	private MessageListener listener;
+    private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(AccelerometerSubscriber.class);
 
-	public AccelerometerSubscriber() {
-		this.setTopic("accelerometer");
-	}
+    private MqttClient mqttClient;
 
-	public void connect(MQTTBrokerConfig config) throws MqttException {
-		this.connectionString = config.getConnectionString();
-		this.mqttClient = new MqttClient(this.connectionString, "client1");
-		MqttConnectOptions connOpts = new MqttConnectOptions();
-		connOpts.setCleanSession(true);
-		connOpts.setMqttVersion(MqttConnectOptions.MQTT_VERSION_3_1_1);
-		connOpts.setKeepAliveInterval(60);
-		connOpts.setConnectionTimeout(60);
-		LOGGER.info("Connecting to broker: {}", this.connectionString);
-		this.mqttClient.connect(connOpts);
-		LOGGER.info("Connected to {}", this.connectionString);
-		this.mqttClient.setCallback(this);
-		this.mqttClient.subscribe(getTopic(), 0);
-		LOGGER.info("Subscribed to {}", getTopic());
-	}
-	
-	public void setMessageListener(MessageListener listener) {
-		this.listener = listener;
-	}
+    private MessageListener listener;
 
-	@Override
-	public void connectionLost(Throwable cause) {
-		LOGGER.error("Lost connection", cause);
-	}
+    public AccelerometerSubscriber() {
+        this.setTopic("accelerometer");
+    }
 
-	@Override
-	public void messageArrived(String topic, MqttMessage message) throws Exception {
-		synchronized (this.queue) {
-			LOGGER.info("Received message: {}", message.toString());
-			if (this.queue.size() >= 100) {
-				this.queue.remove();
-			}
-			this.queue.add(message.toString());
-			if (this.listener != null) {
-				this.listener.messageReceived(message.toString());
-			}
-		}
-	}
+    public void connect(MQTTBrokerConfig config) throws MqttException {
+        this.connectionString = config.getConnectionString();
+        this.mqttClient = new MqttClient(this.connectionString, "client1");
+        MqttConnectOptions connOpts = new MqttConnectOptions();
+        connOpts.setCleanSession(true);
+        connOpts.setMqttVersion(MqttConnectOptions.MQTT_VERSION_3_1_1);
+        connOpts.setKeepAliveInterval(60);
+        connOpts.setConnectionTimeout(60);
+        LOGGER.info("Connecting to broker: {}", this.connectionString);
+        this.mqttClient.connect(connOpts);
+        LOGGER.info("Connected to {}", this.connectionString);
+        this.mqttClient.setCallback(this);
+        this.mqttClient.subscribe(getTopic(), 0);
+        LOGGER.info("Subscribed to {}", getTopic());
+    }
 
-	public List<String> messages() {
-		return new ArrayList<String>(this.queue);
-	}
+    public void setMessageListener(MessageListener listener) {
+        this.listener = listener;
+    }
 
-	@Override
-	public void deliveryComplete(IMqttDeliveryToken token) {
-		LOGGER.debug("delivery completed");
-	}
+    @Override
+    public void connectionLost(Throwable cause) {
+        LOGGER.error("Lost connection", cause);
+    }
 
-	public String getConnectionString() {
-		return this.connectionString;
-	}
+    @Override
+    public void messageArrived(String topic, MqttMessage message) throws Exception {
+        synchronized (this.queue) {
+            LOGGER.info("Received message: {}", message.toString());
+            if (this.queue.size() >= 100) {
+                this.queue.remove();
+            }
+            this.queue.add(message.toString());
+            if (this.listener != null) {
+                this.listener.messageReceived(message.toString());
+            }
+        }
+    }
 
-	public void setConnectionString(String connectionString) {
-		this.connectionString = connectionString;
-	}
+    public List<String> messages() {
+        return new ArrayList<String>(this.queue);
+    }
 
-	public String getTopic() {
-		return this.topic;
-	}
+    @Override
+    public void deliveryComplete(IMqttDeliveryToken token) {
+        LOGGER.debug("delivery completed");
+    }
 
-	public void setTopic(String topic) {
-		this.topic = topic;
-	}
-	
-	public void disconnect() {
-		if (this.mqttClient != null) {
-			try {
-				this.mqttClient.disconnect();
-				this.mqttClient.close();
-			} catch (MqttException e) {
-				LOGGER.error("Error when closing connection", e);
-			}
-		}
-	}
+    public String getConnectionString() {
+        return this.connectionString;
+    }
+
+    public void setConnectionString(String connectionString) {
+        this.connectionString = connectionString;
+    }
+
+    public String getTopic() {
+        return this.topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
+
+    public void disconnect() {
+        if (this.mqttClient != null) {
+            try {
+                this.mqttClient.disconnect();
+                this.mqttClient.close();
+            } catch (MqttException e) {
+                LOGGER.error("Error when closing connection", e);
+            }
+        }
+    }
 
 }

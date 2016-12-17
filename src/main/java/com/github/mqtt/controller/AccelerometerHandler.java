@@ -1,7 +1,5 @@
 package com.github.mqtt.controller;
 
-import java.io.IOException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,46 +12,46 @@ import com.github.mqtt.subscriber.AccelerometerSubscriber;
 import com.github.mqtt.subscriber.MessageListener;
 
 public class AccelerometerHandler extends TextWebSocketHandler implements MessageListener {
-	
-	@Autowired
-	private AccelerometerSubscriber sub;
 
-	private WebSocketSession session;
+    @Autowired
+    private AccelerometerSubscriber sub;
 
-	private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(AccelerometerHandler.class);
+    private WebSocketSession session;
 
-	public AccelerometerHandler() {
-	}
+    private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(AccelerometerHandler.class);
 
-	@Override
-	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		LOGGER.info("Websocket session established");
-		this.session = session;
-		this.sub.setMessageListener(this);
-	}
+    public AccelerometerHandler() {
+    }
 
-	@Override
-	public void handleTextMessage(WebSocketSession session, TextMessage message) {
-		LOGGER.debug("Recevied message {}", message.getPayload());
-	}
+    @Override
+    public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+        LOGGER.info("Websocket session established");
+        this.session = session;
+        this.sub.setMessageListener(this);
+    }
 
-	@Override
-	public void messageReceived(String message) {
-		try {
-			LOGGER.info("Send new message to client {}", message);
-			if (this.session.isOpen()) {
-				this.session.sendMessage(new TextMessage(message));
-			} else {
-				LOGGER.warn("Session is closed!");
-			}
-		} catch (Exception e) {
-			LOGGER.error("Error when sending message", e);
-		}
-	}
-	
-	@Override
-	public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) {
-		LOGGER.info("Websocket session is closed {}", closeStatus);
-	}
+    @Override
+    public void handleTextMessage(WebSocketSession session, TextMessage message) {
+        LOGGER.debug("Recevied message {}", message.getPayload());
+    }
+
+    @Override
+    public void messageReceived(String message) {
+        try {
+            LOGGER.info("Send new message to client {}", message);
+            if (this.session.isOpen()) {
+                this.session.sendMessage(new TextMessage(message));
+            } else {
+                LOGGER.warn("Session is closed!");
+            }
+        } catch (Exception e) {
+            LOGGER.error("Error when sending message", e);
+        }
+    }
+
+    @Override
+    public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) {
+        LOGGER.info("Websocket session is closed {}", closeStatus);
+    }
 
 }
