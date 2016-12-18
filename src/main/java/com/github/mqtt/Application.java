@@ -5,16 +5,18 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.embedded.undertow.UndertowEmbeddedServletContainerFactory;
 import org.springframework.context.annotation.Bean;
 
-import io.undertow.UndertowOptions;
+//import io.undertow.UndertowOptions;
 
 @SpringBootApplication
 public class Application {
+    /**
     @Bean
     UndertowEmbeddedServletContainerFactory embeddedServletContainerFactory() {
         UndertowEmbeddedServletContainerFactory factory = new UndertowEmbeddedServletContainerFactory();
         factory.addBuilderCustomizers(builder -> builder.setServerOption(UndertowOptions.ENABLE_HTTP2, true));
         return factory;
     }
+    */
 
     /**
     * Lets write something so that checkstyle is happy
