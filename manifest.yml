@@ -4,9 +4,9 @@ applications:
   memory: 750M
   instances: 1
   buildpack: https://github.com/afalak/java-buildpack.git
-  path: ./build/libs/mqttsubscriber-0.0.1-SNAPSHOT.jar
+  path: ./target/mqttsubscriber-0.0.1-SNAPSHOT.war.original
   disk_quota: 200M
   stack: cflinuxfs2
   env:
-    JAVA_OPTS: -XX:+DisableExplicitGC -XX:+ScavengeBeforeFullGC -XX:+UseThreadPriorities -XX:+UseG1GC -XX:ParallelGCThreads=16 -XX:ConcGCThreads=16 -XX:CompileThreshold=1000 -XX:+UseCompressedOops -XX:+UseBiasedLocking -DLog4jContextSelector=org.apache.logging.log4j.core.async.AsyncLoggerContextSelector
+    JAVA_OPTS: -XX:+DisableExplicitGC -XX:+ScavengeBeforeFullGC -XX:+UseThreadPriorities -XX:+UseG1GC -XX:ParallelGCThreads=16 -XX:ConcGCThreads=16 -XX:CompileThreshold=1000 -XX:+UseCompressedOops -XX:+UseBiasedLocking -DLog4jContextSelector=org.apache.logging.log4j.core.async.AsyncLoggerContextSelector -Djava.security.egd=file:///dev/urandom
     SPRING_PROFILES_DEFAULT: cloud
